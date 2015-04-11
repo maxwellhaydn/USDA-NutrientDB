@@ -5,7 +5,7 @@ package USDA::NutrientDB;
 
     use USDA::NutrientDB;
 
-    my $ndb = USDA::NutrientDB->create(api_key => 'foo');
+    my $ndb = USDA::NutrientDB->create('REST', api_key => 'foo');
     my @results = $ndb->search('cheddar');
 
     foreach my $food (@results) {
@@ -20,7 +20,7 @@ or a local copy of the database.
 
 =head1 METHODS
 
-=head2 C<create(api_key => $key)>
+=head2 C<create('REST', api_key => $key)>
 
 Returns a connection to the public REST API, or undef if C<$key> is not a valid
 API key.
@@ -31,7 +31,7 @@ API key.
 
 =item *
 
-USDA National Nutrient Database homepage: http://ndb.nal.usda.gov/
+L<USDA National Nutrient Database homepage|http://ndb.nal.usda.gov/>
 
 =back
 
