@@ -5,8 +5,10 @@ use namespace::autoclean;
 
 use Moose;
 
+use USDA::NutrientDB::FoodItem;
+
 sub search {
-    return 1;
+    return USDA::NutrientDB::FoodItem->new;
 }
 
 __PACKAGE__->meta->make_immutable;
