@@ -1,6 +1,6 @@
 package USDA::NutrientDB;
+# ABSTRACT: query the USDA National Nutrient Database
 
-use strict;
-use warnings;
+use Moose;
 
 1;
