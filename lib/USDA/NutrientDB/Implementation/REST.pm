@@ -34,15 +34,58 @@ use namespace::autoclean;
 
 use Moose;
 
+use Carp;
+use REST::Client;
 use USDA::NutrientDB::FoodItem;
 
 has 'api_key' => (
-    is => 'rw',
-    isa => 'Str'
+    is       => 'rw',
+    isa      => 'Str',
+    required => 1
 );
 
+has '_rest_client' => (
+    is       => 'rw',
+    isa      => 'REST::Client',
+    init_arg => undef,
+    lazy     => 1,
+    builder  => '_build_rest_client'
+);
+
+sub BUILD {
+    my $self = shift;
+
+    croak 'Invalid API key: ' . $self->api_key unless $self->_key_is_valid;
+}
+
 sub search {
-    return USDA::NutrientDB::FoodItem->new;
+    my $self = shift;
+    my $keyword = shift;
+
+    my $client = $self->_rest_client;
+}
+
+sub _key_is_valid {
+    my $self = shift;
+
+    # URL to fetch the food report for cheddar cheese. Since REST is stateless,
+    # the only way we can verify the API key is to send a request and check
+    # that it was successful.
+    my $url = '/usda/ndb/reports/?ndbno=11987&type=b&format=fjson';
+    my $client = $self->_rest_client;
+
+    $client->GET($url);
+
+    return $client->responseCode eq '200';
+}
+
+sub _build_rest_client {
+    my $self = shift;
+
+    my $client = REST::Client->new({ host => 'http://api.nal.usda.gov' });
+    $client->addHeader('X-Api-Key', $self->api_key);
+
+    return $client;
 }
 
 __PACKAGE__->meta->make_immutable;
