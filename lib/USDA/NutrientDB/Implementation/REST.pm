@@ -62,7 +62,7 @@ sub search {
     my $self = shift;
     my $keyword = shift;
 
-    my $client = $self->_rest_client;
+    return USDA::NutrientDB::FoodItem->new;
 }
 
 sub _key_is_valid {
