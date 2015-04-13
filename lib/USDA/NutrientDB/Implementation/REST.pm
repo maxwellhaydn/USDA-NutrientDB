@@ -62,7 +62,7 @@ sub search {
     my $self = shift;
     my $keyword = shift;
 
-    return USDA::NutrientDB::FoodItem->new;
+    return USDA::NutrientDB::FoodItem->new(name => 'Cheese, cheddar');
 }
 
 sub _key_is_valid {

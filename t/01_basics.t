@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use 5.010;
 
-use Test::More tests => 7;
+use Test::More tests => 8;
 use Test::Exception;
 use Test::MockModule;
 
@@ -32,4 +32,4 @@ ok( my ($item) = $ndb->search('cheddar'),
     'search for "cheddar" returns something' );
 ok( $item->isa('USDA::NutrientDB::FoodItem'),
     'search method returns a FoodItem' ); 
-#is( $item->name, 'Cheese, cheddar' );
+is( $item->name, 'Cheese, cheddar' );
