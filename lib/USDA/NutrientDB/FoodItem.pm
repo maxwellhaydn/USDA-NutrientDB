@@ -5,8 +5,20 @@ use namespace::autoclean;
 
 use Moose;
 
+has 'ndbno' => (
+    is       => 'ro',
+    isa      => 'Str',
+    required => 1
+);
+
 has 'name' => (
-    is       => 'rw',
+    is       => 'ro',
+    isa      => 'Str',
+    required => 1
+);
+
+has 'food_group' => (
+    is       => 'ro',
     isa      => 'Str',
     required => 1
 );

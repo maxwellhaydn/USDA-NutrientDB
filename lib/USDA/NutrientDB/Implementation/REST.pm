@@ -55,6 +55,8 @@ has '_rest_client' => (
 sub BUILD {
     my $self = shift;
 
+    # TODO: Only croak on 403. Why tell people their key is bad when the site
+    # is down, for example?
     croak 'Invalid API key: ' . $self->api_key unless $self->_key_is_valid;
 }
 
@@ -62,7 +64,34 @@ sub search {
     my $self = shift;
     my $keyword = shift;
 
-    return USDA::NutrientDB::FoodItem->new(name => 'Cheese, cheddar');
+    # TODO: Use buildQuery to construct query string
+    # TODO: Store URL prefix ('/usda/ndb/') in a variable
+    my $client = $self->_rest_client;
+    my $url = '/usda/ndb/search/?format=json&q=' . $keyword .
+              '&sort=n&offset=0';
+    #$client->GET($url);
+
+    # TODO: Set $errstr on failure
+
+    # Join search results with corresponding food records
+    # TODO: Only set the ndbno and make other attributes of FoodItem lazy
+    #       so they're only generated if user looks at the item?
+    #my $response = $client->responseContent;
+
+    return USDA::NutrientDB::FoodItem->new(
+        ndbno      => '01009',
+        name       => 'Cheese, cheddar',
+        food_group => 'Dairy and Egg Products'
+    );
+}
+
+# Fetch the record for a food item, given the ndbno
+sub _fetch {
+    my $self = shift;
+    my $ndbno = shift;
+
+    my $client = $self->_rest_client;
+#    $client->GET('
 }
 
 sub _key_is_valid {
