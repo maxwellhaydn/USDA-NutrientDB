@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use 5.010;
 
-use Test::More tests => 10;
+use Test::More tests => 6;
 use Test::Exception;
 use Test::MockModule;
 
@@ -30,10 +30,14 @@ ok( $ndb->isa('USDA::NutrientDB::Implementation::REST'),
     'Passing api_key creates USDA::NutrientDB::Implementation::REST object' );
 is( $ndb->api_key, $valid_key );
 
-ok( my ($item) = $ndb->search('cheddar'),
-    'search for "cheddar" returns something' );
-ok( $item->isa('USDA::NutrientDB::FoodItem'),
-    'search method returns a FoodItem' ); 
-is( $item->ndbno, '01009' );
-is( $item->name, 'Cheese, cheddar' );
-is( $item->food_group, 'Dairy and Egg Products' );
+my $search = $ndb->search('cheddar');
+ok( $search->isa('USDA::NutrientDB::Implementation::REST::Results'),
+    'search in scalar context returns an iterator to search results' );
+
+#my $item = $search->next;
+#ok( $item->isa('USDA::NutrientDB::FoodItem'),
+#    'next method returns a FoodItem' ); 
+#is( $item->ndbno, '01009' );
+#is( $item->name, 'Cheese, cheddar' );
+#is( $item->food_group, 'Dairy and Egg Products' );
+#is( $item->measure, 'cup, diced' );

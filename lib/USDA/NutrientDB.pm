@@ -6,10 +6,10 @@ package USDA::NutrientDB;
     use USDA::NutrientDB;
 
     my $ndb = USDA::NutrientDB->create('REST', api_key => 'foo');
-    my @results = $ndb->search('cheddar');
+    my $search = $ndb->search('cheddar');
 
-    foreach my $food (@results) {
-        say $food->kcal;
+    while (my $item = $search->next) {
+        say $item->kcal;
     }
 
 =head1 DESCRIPTION
@@ -24,6 +24,22 @@ or a local copy of the database.
 
 Returns a connection to the public REST API, or undef if C<$key> is not a valid
 API key.
+
+=head2 C<search($keyword)>
+
+Searches the database for food items that contain C<$keyword> in the food
+description, scientific name, or commercial name. In scalar context, returns an
+iterator that can be used to fetch the next L<USDA::NutrientDB::FoodItem> from
+the result set, e.g.
+
+    my $search = $ndb->search('cheddar');
+
+    while (my $item = $search->next) {
+        ...
+    }
+
+In list context, returns a list of all matching L<USDA::NutrientDB::FoodItem>s.
+For performance reasons, you should generally use the iterator instead.
 
 =head1 SEE ALSO
 
