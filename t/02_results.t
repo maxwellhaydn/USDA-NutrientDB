@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use 5.010;
 
-use Test::More tests => 2;
+use Test::More tests => 7;
 use Test::Exception;
 use Test::MockModule;
 
@@ -17,5 +17,16 @@ BEGIN {
 #$mock_client->mock(GET => undef);
 #$mock_client->mock(responseCode => sub { return '403' });
 
-ok( my $results =
-        USDA::NutrientDB::Implementation::REST::Results->new );
+my $results = new_ok(
+    'USDA::NutrientDB::Implementation::REST::Results',
+    [ keyword => 'cheddar', api_key => 'foo' ]
+);
+
+can_ok( $results, 'api_key' );
+can_ok( $results, 'keyword' );
+can_ok( $results, 'rest_client' );
+can_ok( $results, 'next' );
+
+my $first = $results->next;
+
+isa_ok( $first, 'USDA::NutrientDB::FoodItem' );

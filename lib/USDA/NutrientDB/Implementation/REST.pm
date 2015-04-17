@@ -33,9 +33,9 @@ description, scientific name, or commercial name. In scalar context, returns an
 iterator that can be used to fetch the next L<USDA::NutrientDB::FoodItem> from
 the result set, e.g.
 
-    my $search = $ndb->search('cheddar');
+    my $results = $ndb->search('cheddar');
 
-    while (my $item = $search->next) {
+    while (my $item = $results->next) {
         ...
     }
 
@@ -71,7 +71,10 @@ sub search {
     my $self = shift;
     my $keyword = shift;
 
-    return USDA::NutrientDB::Implementation::REST::Results->new;
+    return USDA::NutrientDB::Implementation::REST::Results->new(
+        api_key => $self->api_key,
+        keyword => $keyword
+    );
 }
 
 __PACKAGE__->meta->make_immutable;
