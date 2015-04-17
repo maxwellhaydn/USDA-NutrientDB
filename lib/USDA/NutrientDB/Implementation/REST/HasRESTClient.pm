@@ -26,7 +26,6 @@ sub invalid_key {
     my $query_string = REST::Client::buildQuery(
         ndbno  => 11987,
         type   => 'b',
-        format => 'fjson'
     );
     my $url = '/usda/ndb/reports/' . $query_string;
 
@@ -43,6 +42,7 @@ sub _build_rest_client {
         timeout => 10
     });
     $client->addHeader('X-Api-Key', $self->api_key);
+    $client->addHeader('Content-Type', 'application/json');
 
     return $client;
 }

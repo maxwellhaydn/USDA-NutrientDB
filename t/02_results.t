@@ -26,7 +26,11 @@ can_ok( $results, 'api_key' );
 can_ok( $results, 'keyword' );
 can_ok( $results, 'rest_client' );
 can_ok( $results, 'next' );
+can_ok( $results, '_matching_items' );
 
 my $first = $results->next;
 
 isa_ok( $first, 'USDA::NutrientDB::FoodItem' );
+is( $first->food_group, 'Dairy and Egg Products' );
+is( $first->name, 'Cheese, cheddar' );
+is( $first->ndbno, '01009' );
