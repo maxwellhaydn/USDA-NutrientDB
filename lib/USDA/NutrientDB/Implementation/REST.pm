@@ -7,9 +7,9 @@ package USDA::NutrientDB::Implementation::REST;
 
     # Creates a USDA::NutrientDB::Implementation::REST object
     my $ndb = USDA::NutrientDB->create('REST', api_key => 'foo');
-    $ndb->search('cheddar');
+    my $results = $ndb->search('cheddar');
 
-    while (my $item = $ndb->next) {
+    while (my $item = $results->next) {
         say $item->kcal;
     }
 
@@ -62,7 +62,7 @@ with 'USDA::NutrientDB::Implementation::REST::HasRESTClient';
 sub BUILD {
     my $self = shift;
 
-    croak 'Invalid API key: "' . $self->api_key . '"' if $self->invalid_key;
+    croak 'Invalid API key: "' . $self->api_key . '"' if $self->_invalid_key;
 
     # TODO: croak on 404, 500, etc?
 }
@@ -75,6 +75,23 @@ sub search {
         api_key => $self->api_key,
         keyword => $keyword
     );
+}
+
+sub _invalid_key {
+    my $self = shift;
+
+    # URL to fetch the food report for cheddar cheese. Since REST is stateless,
+    # the only way we can verify the API key is to send a request and check
+    # that it was successful.
+    my $query_string = REST::Client::buildQuery(
+        ndbno  => 11987,
+        type   => 'b',
+    );
+    my $url = '/usda/ndb/reports/' . $query_string;
+
+    $self->_rest_client->GET($url);
+
+    return $self->_rest_client->responseCode eq '403';
 }
 
 __PACKAGE__->meta->make_immutable;

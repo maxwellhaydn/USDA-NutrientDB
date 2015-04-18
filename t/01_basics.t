@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use 5.010;
 
-use Test::More tests => 7;
+use Test::More tests => 6;
 use Test::Exception;
 use Test::MockModule;
 
@@ -27,15 +27,11 @@ throws_ok {
 
 $mock_client->mock(responseCode => sub { return '200' });
 
-ok(
-    my $ndb = USDA::NutrientDB->create('REST', api_key => $valid_key),
-    'create method returns something for a valid key'
-);
+my $ndb = USDA::NutrientDB->create('REST', api_key => $valid_key);
 
 isa_ok(
     $ndb,
-    'USDA::NutrientDB::Implementation::REST',
-    'Passing api_key creates USDA::NutrientDB::Implementation::REST object'
+    'USDA::NutrientDB::Implementation::REST'
 );
 
 can_ok( $ndb, 'api_key' );

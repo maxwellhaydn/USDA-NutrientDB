@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use 5.010;
 
-use Test::More tests => 7;
+use Test::More tests => 4;
 use Test::MockModule;
 use MooseX::Test::Role;
 
@@ -21,16 +21,5 @@ my $consumer = consuming_object(
     'USDA::NutrientDB::Implementation::REST::HasRESTClient'
 );
 
-can_ok( $consumer, 'rest_client' );
-can_ok( $consumer, 'invalid_key' );
-isa_ok( $consumer->rest_client, 'REST::Client' );
-
-my $mock_client = Test::MockModule->new('REST::Client');
-$mock_client->mock(GET => undef);
-$mock_client->mock(responseCode => sub { return '403' });
-
-ok( $consumer->invalid_key );
-
-$mock_client->mock(responseCode => sub { return '200' });
-
-ok( ! $consumer->invalid_key );
+can_ok( $consumer, '_rest_client' );
+isa_ok( $consumer->_rest_client, 'REST::Client' );

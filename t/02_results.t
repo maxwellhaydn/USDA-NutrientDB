@@ -24,9 +24,7 @@ my $results = new_ok(
 
 can_ok( $results, 'api_key' );
 can_ok( $results, 'keyword' );
-can_ok( $results, 'rest_client' );
 can_ok( $results, 'next' );
-can_ok( $results, '_matching_items' );
 
 my $first = $results->next;
 

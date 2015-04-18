@@ -39,27 +39,27 @@ sub next {
     my $self = shift;
 
     # Return next cached FoodItem, if there is one
-    return shift $self->_results if @{ $self->_results };
-
-    # Otherwise, fetch nutrient details for next search result and re-populate
-    # the cache
-    my $next = shift $self->_matching_items;
-
-    my @nutrients = $self->_get_nutrients($next->ndbno);
-
-    # Get unique measures (e.g. "cup, diced", "oz", "cubic inch") for this item
-    my %measures;
-    #foreach my $nutrient (@nutrients) {
-    #    @measures{  } = map { $_->{label} } @{ $nutrient->{measures} };
-
-    foreach my $nutrient (@nutrients) {
-        my $item = USDA::NutrientDB::FoodItem->new(
-            ndbno => $next->ndbo,
-            name  => $next->name,
-            food_group => $next->food_group,
-            #quantity => $nutrient->
-        );
-    }
+#    return shift $self->_results if @{ $self->_results };
+#
+#    # Otherwise, fetch nutrient details for next search result and re-populate
+#    # the cache
+#    my $next = shift $self->_matching_items;
+#
+#    my @nutrients = $self->_get_nutrients($next->ndbno);
+#
+#    # Get unique measures (e.g. "cup, diced", "oz", "cubic inch") for this item
+#    my %measures;
+#    #foreach my $nutrient (@nutrients) {
+#    #    @measures{  } = map { $_->{label} } @{ $nutrient->{measures} };
+#
+#    foreach my $nutrient (@nutrients) {
+#        my $item = USDA::NutrientDB::FoodItem->new(
+#            ndbno => $next->ndbo,
+#            name  => $next->name,
+#            food_group => $next->food_group,
+#            #quantity => $nutrient->
+#        );
+#    }
 
     return USDA::NutrientDB::FoodItem->new(
         food_group => 'foo',
