@@ -98,4 +98,52 @@ has 'food_group' => (
     required => 1
 );
 
+has 'energy' => (
+    is       => 'ro',
+    isa      => 'Num',
+    init_arg => undef
+);
+
+has 'kcal' => (
+    is       => 'ro',
+    isa      => 'Num',
+    init_arg => undef
+);
+
+has 'protein' => (
+    is       => 'ro',
+    isa      => 'Num',
+    init_arg => undef
+);
+
+has 'fat' => (
+    is       => 'ro',
+    isa      => 'Num',
+    init_arg => undef
+);
+
+has 'carbohydrate' => (
+    is       => 'ro',
+    isa      => 'Num',
+    init_arg => undef
+);
+
+has 'fiber' => (
+    is       => 'ro',
+    isa      => 'Num',
+    init_arg => undef
+);
+
+has 'sugar' => (
+    is       => 'ro',
+    isa      => 'Num',
+    init_arg => undef
+);
+
+has 'water' => (
+    is       => 'ro',
+    isa      => 'Num',
+    init_arg => undef
+);
+
 __PACKAGE__->meta->make_immutable;
