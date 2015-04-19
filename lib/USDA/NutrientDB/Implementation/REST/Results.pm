@@ -48,7 +48,7 @@ sub next {
     my @nutrient_data = $self->_get_nutrient_data($next_match->{ndbno});
 
     # Generate a new FoodItem for each unique measure (e.g. "cup, diced", "oz",
-    # "cubic inch") returned in the nutrient report
+    # "cubic inch") returned in the detailed food report
     my %items;
     foreach my $nutrient (@nutrient_data) {
         my $nutrient_object = USDA::NutrientDB::Nutrient->new(
