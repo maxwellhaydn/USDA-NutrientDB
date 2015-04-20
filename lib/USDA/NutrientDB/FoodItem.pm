@@ -141,7 +141,7 @@ has 'sugar' => (
 );
 
 has 'water' => (
-    is       => 'ro',
+    is       => 'rw',
     isa      => 'Num',
     init_arg => undef
 );

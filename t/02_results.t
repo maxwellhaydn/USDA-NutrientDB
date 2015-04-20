@@ -4,23 +4,36 @@ use strict;
 use warnings;
 use 5.010;
 
-use Test::More tests => 7;
+use Test::More;
 use Test::Exception;
 use Test::MockModule;
+
+my $ndb;
+
+BEGIN {
+    my $api_key = $ENV{USDA_API_KEY} // 'DEMO_KEY';
+
+    eval {
+        require USDA::NutrientDB;
+        $ndb = USDA::NutrientDB->create('REST', {
+            api_key => $api_key
+        });
+    };
+
+    if ($@) {
+        plan skip_all => $@;
+        exit 0;
+    }
+    else {
+        plan tests => 8;
+    }
+}
 
 BEGIN {
     use_ok( 'USDA::NutrientDB::Implementation::REST::Results' );
 }
 
-# Mock REST::Client so we don't have to make actual requests
-#my $mock_client = Test::MockModule->new('REST::Client');
-#$mock_client->mock(GET => undef);
-#$mock_client->mock(responseCode => sub { return '403' });
-
-my $results = new_ok(
-    'USDA::NutrientDB::Implementation::REST::Results',
-    [ keyword => 'cheddar', api_key => 'foo' ]
-);
+my $results = $ndb->search('cheddar');
 
 can_ok( $results, 'api_key' );
 can_ok( $results, 'keyword' );
