@@ -45,3 +45,4 @@ isa_ok( $first, 'USDA::NutrientDB::FoodItem' );
 is( $first->food_group, 'Dairy and Egg Products' );
 is( $first->name, 'Cheese, cheddar' );
 is( $first->ndbno, '01009' );
+#is( $first->unit, 'cup, diced' );

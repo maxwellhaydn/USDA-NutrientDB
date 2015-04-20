@@ -98,6 +98,24 @@ has 'food_group' => (
     required => 1
 );
 
+has 'quantity' => (
+    is       => 'ro',
+    isa      => 'Num',
+    required => 1
+);
+
+has 'units' => (
+    is       => 'ro',
+    isa      => 'Str',
+    required => 1
+);
+
+has 'grams' => (
+    is       => 'ro',
+    isa      => 'Num',
+    required => 1
+);
+
 has 'energy' => (
     is       => 'ro',
     isa      => 'Num',
@@ -141,7 +159,7 @@ has 'sugar' => (
 );
 
 has 'water' => (
-    is       => 'rw',
+    is       => 'ro',
     isa      => 'Num',
     init_arg => undef
 );

@@ -76,7 +76,7 @@ sub next {
                     name       => $next_match->{name},
                     food_group => $next_match->{group},
                     quantity   => $measure->{qty},
-                    unit       => $measure->{label},
+                    units      => $measure->{label},
                     grams      => $measure->{eqv}
                 );
             }
