@@ -25,7 +25,7 @@ BEGIN {
         exit 0;
     }
     else {
-        plan tests => 8;
+        plan tests => 9;
     }
 }
 
@@ -45,4 +45,4 @@ isa_ok( $first, 'USDA::NutrientDB::FoodItem' );
 is( $first->food_group, 'Dairy and Egg Products' );
 is( $first->name, 'Cheese, cheddar' );
 is( $first->ndbno, '01009' );
-#is( $first->unit, 'cup, diced' );
+is( $first->units, 'cup, diced' );

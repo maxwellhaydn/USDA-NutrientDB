@@ -69,21 +69,23 @@ sub next {
 
         foreach my $measure (@{ $nutrient->{measures} }) {
 
-            # Create one and only one FoodItem object for each measure
-            if (! exists $items{$measure}) {
-                $items{$measure} = USDA::NutrientDB::FoodItem->new(
+            my $unit = $measure->{label};
+
+            # Create one and only one FoodItem object for each unit of measure
+            if (! exists $items{$unit}) {
+                $items{$unit} = USDA::NutrientDB::FoodItem->new(
                     ndbno      => $next_match->{ndbno},
                     name       => $next_match->{name},
                     food_group => $next_match->{group},
                     quantity   => $measure->{qty},
-                    units      => $measure->{label},
+                    units      => $unit,
                     grams      => $measure->{eqv}
                 );
             }
 
             # Set the amount of this nutrient, e.g. 48.97 g of water,
             # 536.0 kcal of energy
-            my $item = $items{$measure};
+            my $item = $items{$unit};
             my $attribute_name = $attribute{ $nutrient->{name} };
             next unless defined $attribute_name;
 
