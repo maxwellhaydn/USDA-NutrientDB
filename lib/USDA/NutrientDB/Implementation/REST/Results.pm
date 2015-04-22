@@ -40,14 +40,17 @@ sub next {
     my $self = shift;
 
     # Return next cached FoodItem, if there is one
-    return shift @{ $self->_cache } if $self->_cache;
+    my $cache = $self->_cache;
+    return shift @$cache if defined $cache and @$cache;
 
     # Otherwise, fetch nutrient details for next search result and re-populate
     # the cache
-    return unless $self->_search_data;
-    my $next_match = shift @{ $self->_search_data };
+    my $search_data = $self->_search_data;
+    return unless defined $search_data and @$search_data;
+    my $next_match = shift @$search_data;
 
     my $nutrient_data = $self->_get_nutrient_data($next_match->{ndbno});
+    return unless defined $nutrient_data and @$nutrient_data;
 
     # Mapping of nutrient names as used in the database to FoodItem attribute
     # names
